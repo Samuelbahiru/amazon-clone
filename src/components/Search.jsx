@@ -2,7 +2,7 @@
 import {MagnifyingGlassIcon} from '@heroicons/react/24/outline'
 import {useState, useEffect} from 'react'
 import CallApi from '../utils/CallApi'
-
+import { useNavigate, createSearchParams } from 'react-router-dom'
 
 
 
@@ -10,6 +10,7 @@ const Search = () => {
   const [suggestions, setSuggestions] = useState(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [category, setCategory] = useState("All")
+  const navigate = useNavigate()
   const getSuggestions =  async()=>{
    await CallApi(`data/suggestions.json`).then((suggestionsResults)=>{
           setSuggestions(suggestionsResults)
@@ -24,7 +25,18 @@ const Search = () => {
 
   const onHandleSubmit = (e)=> {
     e.preventDefault();
+      navigate({
+        pathname: "search",
+        search: `${
+          createSearchParams({
+            category: `${category}`,
+            searchTerm: `${searchTerm}`
+          })
+        }`
+      })
 
+      setSearchTerm("");
+      setCategory("All");
 
   }
   return (
@@ -40,7 +52,7 @@ const Search = () => {
             <option>Computer</option>
             <option>Mobiles</option>
         </select>
-             <input className='flex grow items-center h-[100%] rounded-l text-black' type="text" onChange={(e)=>{
+             <input className='flex grow items-center h-[100%] rounded-l text-black' type="text" value={searchTerm} onChange={(e)=>{
               setSearchTerm(e.target.value)
              }}  />
              <button className='w-[45px] ' onClick={onHandleSubmit}><MagnifyingGlassIcon className='h-[27px] m-auto stroke-slate-900'/></button>
@@ -62,7 +74,8 @@ const Search = () => {
             .map((suggestion )=> {
               
              return( <div key={suggestion.id} onClick={()=>{
-              setSearchTerm(suggestion.title)
+              console.log("clicked")
+              return(setSearchTerm(suggestion.title))
              }}>
                   {suggestion.title}
               </div>)

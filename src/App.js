@@ -6,8 +6,8 @@ import { HomePage, Navbar, Checkout, SearchResult, ProductPage} from './componen
 const App = () => {
   return (
 
-    <div className="bg-purple-400">
-
+    <div className="w-[100%]">
+        
         <BrowserRouter>
         <Navbar/>
             <Routes>
