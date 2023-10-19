@@ -62,8 +62,7 @@ const Search = () => {
       <div className='bg-white text-black w-full z-40 absolute'>
           {
             suggestions.filter((suggestion)=>{
-              console.log("searchterm", searchTerm)
-              console.log("sugesstion",suggestions)
+             
               const currentSearchTerm = searchTerm.toLowerCase();
               const title = suggestion.title.toLowerCase();
               return (currentSearchTerm && title.startsWith(currentSearchTerm) &&
